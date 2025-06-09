@@ -122,7 +122,13 @@ try {
             echo "/* Failed to load styles. Using fallback styles. */ body { font-family: Arial, sans-serif; } .dashboard-section { max-width: 1200px; margin: 3rem auto; padding: 1rem; }";
         }
         ?>
+        .dashboard-section { max-width: 1200px; margin: 3rem auto; padding: 1rem; }
+        .dashboard-card { background: var(--card-bg, #fff); padding: 1.5rem; border-radius: 15px; box-shadow: 0 5px 15px var(--shadow, rgba(0,0,0,0.1)); text-align: center; margin-bottom: 1.5rem; }
+        .dashboard-card h3 { margin: 0 0 0.5rem; color: var(--primary-color, #d32f2f); }
 
+        .toggle-button { background: var(--primary-color, #d32f2f); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 25px; font-weight: 700; cursor: pointer; margin-bottom: 1rem; }
+        .toggle-button:hover { background: var(--primary-dark, #b71c1c); }
+        #orderTrendsChart { max-width: 600px; margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -206,7 +212,14 @@ try {
             <?php endif; ?>
         </div>
 
-      
+        <div class="confirmed-orders <?php echo $confirmedOrdersCount == 0 ? 'zero' : ''; ?>">
+            Total Confirmed Orders (Delivered): <?php echo htmlspecialchars($confirmedOrdersCount); ?>
+            <?php if ($confirmedOrdersCount == 0 && !empty($orders)): ?>
+                <br><span style="font-size: 0.9rem; color: #666;">(No orders delivered yet.)</span>
+            <?php elseif ($confirmedOrdersCount == 0): ?>
+                <br><span style="font-size: 0.9rem; color: #666;">(No orders exist or are delivered yet.)</span>
+            <?php endif; ?>
+        </div>
         <button class="toggle-button" onclick="toggleOrderHistory()">View Orders</button>
         <div class="order-history" id="order-history">
             <div class="order-grid">
